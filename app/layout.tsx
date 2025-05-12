@@ -1,11 +1,11 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import '@/assets/styles/globals.css';
-import { ThemeProvider } from 'next-themes';
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "@/assets/styles/globals.css";
+import { ThemeProvider } from "next-themes";
 
-import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from '@/lib/constants';
+import { APP_NAME, APP_DESCRIPTION, SERVER_URL } from "@/lib/constants";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -14,8 +14,10 @@ export const metadata: Metadata = {
   },
   description: APP_DESCRIPTION,
   metadataBase: new URL(SERVER_URL),
+  icons: {
+    icon: "/favicon.png",
+  },
 };
-
 
 export default function RootLayout({
   children,
@@ -23,11 +25,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} antialiased`}>
         <ThemeProvider
-          attribute='class'
-          defaultTheme='dark'
+          attribute="class"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
