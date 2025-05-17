@@ -9,10 +9,10 @@ export const signInDefaultValues = {
 };
 
 export const signUpDefaultValues = {
-  name: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
+  name: 'AbdoAnssem',
+  email: 'Sbaiti@simo.com',
+  password: 'password',
+  confirmPassword: 'password',
 };
 
 export const shippingAddressDefaultValues = {
