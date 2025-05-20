@@ -1,13 +1,37 @@
 import { z } from "zod";
 import { formatNumberWithDecimal } from "./utils";
 import { PAYMENT_METHODS } from "./constants";
+import { Decimal } from '@prisma/client/runtime/library';
 
+
+
+// Helper function to safely convert Decimal to string
+const decimalToString = (value: unknown): string => {
+  if (value instanceof Decimal) {
+    return value.toString();
+  }
+  if (typeof value === 'number') {
+    return value.toString();
+  }
+  return String(value);
+};
+
+// Currency validator that handles both string and Decimal inputs
 const currency = z
-  .string()
+  .union([
+    z.string(),
+    z.number(),
+    z.instanceof(Decimal)
+  ])
+  .transform(decimalToString)
   .refine(
-    (value) => /^\d+(\.\d{2})?$/.test(formatNumberWithDecimal(Number(value))),
-    "Price must have exactly two decimal places"
-  );
+    (value) => /^\d+(\.\d{1,2})?$/.test(value),
+    "Price must have at most two decimal places"
+  )
+  .transform((val) => {
+    // Ensure consistent string format with exactly two decimal places
+    return formatNumberWithDecimal(Number(val));
+  });
 
 // Schema for inserting products
 export const insertProductSchema = z.object({
@@ -22,6 +46,7 @@ export const insertProductSchema = z.object({
   banner: z.string().nullable(),
   price: currency,
 });
+
 
 // Schema for updating products
 export const updateProductSchema = insertProductSchema.extend({
