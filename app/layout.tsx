@@ -20,22 +20,23 @@ export const metadata: Metadata = {
   },
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased __text_mode_READY__`}>
+    <html lang='en' suppressHydrationWarning={true}>
+      <body className={`${inter.className} antialiased`}>
         <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
+          attribute='class'
+          defaultTheme='light'
           enableSystem
           disableTransitionOnChange
         >
           {children}
-          <Toaster richColors />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

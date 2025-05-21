@@ -1,18 +1,19 @@
 'use server';
 
 import {
-  // shippingAddressSchema,
+  shippingAddressSchema,
   signInFormSchema,
   signUpFormSchema,
   paymentMethodSchema,
   updateUserSchema,
 } from '../validators';
+
 import { auth, signIn, signOut } from '@/auth';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import { hash } from '../encrypt';
 import  prisma  from '@/db/prisma';
 import { formatError } from '../utils';
-// import { ShippingAddress } from '@/types';
+import { ShippingAddress } from '@/types';
 import { z } from 'zod';
 import { PAGE_SIZE } from '../constants';
 import { revalidatePath } from 'next/cache';
@@ -100,31 +101,31 @@ export async function getUserById(userId: string) {
 }
 
 // Update the user's address
-// export async function updateUserAddress(data: ShippingAddress) {
-//   try {
-//     const session = await auth();
+export async function updateUserAddress(data: ShippingAddress) {
+  try {
+    const session = await auth();
 
-//     const currentUser = await prisma.user.findFirst({
-//       where: { id: session?.user?.id },
-//     });
+    const currentUser = await prisma.user.findFirst({
+      where: { id: session?.user?.id },
+    });
 
-//     if (!currentUser) throw new Error('User not found');
+    if (!currentUser) throw new Error('User not found');
 
-//     const address = shippingAddressSchema.parse(data);
+    const address = shippingAddressSchema.parse(data);
 
-//     await prisma.user.update({
-//       where: { id: currentUser.id },
-//       data: { address },
-//     });
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { address },
+    });
 
-//     return {
-//       success: true,
-//       message: 'User updated successfully',
-//     };
-//   } catch (error) {
-//     return { success: false, message: formatError(error) };
-//   }
-// }
+    return {
+      success: true,
+      message: 'User updated successfully',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
 
 // Update user's payment method
 export async function updateUserPaymentMethod(

@@ -16,11 +16,11 @@ export const signUpDefaultValues = {
 };
 
 export const shippingAddressDefaultValues = {
-  fullName: '',
-  streetAddress: '',
-  city: '',
-  postalCode: '',
-  country: '',
+  fullName: 'John Doe',
+  streetAddress: '123 Main St',
+  city: 'Tata city',
+  postalCode: '12345',
+  country: 'MAR',
 };
 
 export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
