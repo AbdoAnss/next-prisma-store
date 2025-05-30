@@ -38,8 +38,8 @@ A full-stack e-commerce platform built with Next.js, Prisma, Tailwind CSS, and N
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
-    cd your-repo-name
+    git clone https://github.com/AbdoAnss/next-prisma-store.git
+    cd next-prisma-store
     ```
 2.  **Install dependencies:**
     ```bash
