@@ -17,28 +17,37 @@ export const metadata: Metadata = {
   title: "Sign In",
 };
 
-const  SignIn = async ( props: {
-    searchParams: Promise<{
-      callbackUrl: string;
-    }>;
-  }) => {
-    const { callbackUrl } = await props.searchParams;
+const SignIn = async (props: {
+  searchParams: Promise<{
+    callbackUrl: string;
+  }>;
+}) => {
+  const { callbackUrl } = await props.searchParams;
   const session = await auth();
 
   if (session) {
-  return redirect(callbackUrl || '/');
-}
+    return redirect(callbackUrl || "/");
+  }
   return (
     <div className="w-full max-w-md mx-auto">
       <Card>
         <CardHeader className="space-y-4">
           <Link href="/" className="flex-center">
             <Image
-              priority={true}
-              src="/images/favicon.png"
-              width={100}
-              height={100}
+              src="/images/logo.png"
               alt={`${APP_NAME} logo`}
+              className="block dark:hidden"
+              height={100}
+              width={100}
+              priority={true}
+            />
+            <Image
+              src="/images/whiteLogo.png"
+              alt={`${APP_NAME} logo`}
+              className="hidden dark:block"
+              height={100}
+              width={100}
+              priority={true}
             />
           </Link>
           <CardTitle className="text-center">Sign In</CardTitle>
