@@ -1,14 +1,21 @@
 import ProductList from '@/components/shared/product/product-list';
-import { getLatestProducts } from '@/lib/actions/product.actions';
+import {
+  getLatestProducts,
+} from '@/lib/actions/product.actions';
+import ViewAllProductsButton from '@/components/view-all-products-button';
 
-const HomePage = async () => {
+
+const Homepage = async () => {
   const latestProducts = await getLatestProducts();
+
   return (
-    <div className='space-y-8'>
-      <h2 className='h2-bold'>Latest Products</h2>
-      <ProductList title='Newest Arrivals' data={latestProducts} />
-    </div>
+    <>
+      <ProductList data={latestProducts} title='Newest Arrivals' limit={4} />
+      <div className='flex justify-center items-center my-8'>
+        <ViewAllProductsButton />
+      </div>
+    </>
   );
 };
 
-export default HomePage;
+export default Homepage;
