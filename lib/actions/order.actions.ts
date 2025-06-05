@@ -229,32 +229,15 @@ export async function getOrderSummary() {
   };
 }
 
-// Get all orders
+// Get All Orders (Admin)
 export async function getAllOrders({
   limit = PAGE_SIZE,
   page,
-  query,
 }: {
   limit?: number;
   page: number;
-  query: string;
 }) {
-  const queryFilter: Prisma.OrderWhereInput =
-    query && query !== "all"
-      ? {
-          user: {
-            name: {
-              contains: query,
-              mode: "insensitive",
-            } as Prisma.StringFilter,
-          },
-        }
-      : {};
-
   const data = await prisma.order.findMany({
-    where: {
-      ...queryFilter,
-    },
     orderBy: { createdAt: "desc" },
     take: limit,
     skip: (page - 1) * limit,
@@ -268,7 +251,15 @@ export async function getAllOrders({
     totalPages: Math.ceil(dataCount / limit),
   };
 }
-
+export async function updateOrderToPaidByCOD(orderId: string) {
+  try {
+    await updateOrderToPaid({ orderId });
+    revalidatePath(`/order/${orderId}`);
+    return { success: true, message: "Order paid successfully" };
+  } catch (err) {
+    return { success: false, message: formatError(err) };
+  }
+}
 // Delete an order
 export async function deleteOrder(id: string) {
   try {
