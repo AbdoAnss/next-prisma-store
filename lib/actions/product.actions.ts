@@ -199,3 +199,20 @@ export async function getFeaturedProducts() {
 
   return convertToPlainObject(data);
 }
+// Create Product
+export async function createProduct(data: z.infer<typeof insertProductSchema>) {
+  try {
+    // Validate and create product
+    const product = insertProductSchema.parse(data);
+    await prisma.product.create({ data: product });
+
+    revalidatePath('/admin/products');
+
+    return {
+      success: true,
+      message: 'Product created successfully',
+    };
+  } catch (error) {
+    return { success: false, message: formatError(error) };
+  }
+}
