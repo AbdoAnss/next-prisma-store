@@ -34,8 +34,6 @@ const OrdersPage = async (props: {
     page: Number(page),
   });
 
-  console.log(orders);
-
   return (
     <div className="space-y-2">
       <h2 className="h2-bold">Orders</h2>
