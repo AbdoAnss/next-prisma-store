@@ -19,6 +19,7 @@
     "@radix-ui/react-radio-group": "^1.3.7",
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.2.3",
+    "@uploadthing/react": "^7.3.1",
     "aseds-store": "file:",
     "bcrypt-ts-edge": "^3.0.1",
     "class-variance-authority": "^0.7.1",
@@ -37,6 +38,7 @@
     "slugify": "^1.6.6",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.2.0",
+    "uploadthing": "^7.7.2",
     "vaul": "^1.1.2",
     "zod": "^3.25.17"
   },

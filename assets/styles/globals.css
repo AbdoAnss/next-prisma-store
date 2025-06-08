@@ -42,7 +42,14 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 }
+/* Uploadthing button text override*/
+html.dark .upload-field .text-white {
+  color: #ffffff !important;
+}
 
+.upload-field .text-white {
+  color: #000 !important;
+}
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
