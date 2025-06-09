@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 import {
   insertProductSchema,
   insertCartSchema,
@@ -8,7 +8,7 @@ import {
   insertOrderSchema,
   paymentResultSchema,
   insertReviewSchema,
-} from '@/lib/validators';
+} from "@/lib/validators";
 
 export type Product = z.infer<typeof insertProductSchema> & {
   id: string;

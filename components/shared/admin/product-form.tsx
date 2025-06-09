@@ -21,7 +21,7 @@ import slugify from "slugify";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-//import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { UploadButton } from "@/lib/uploadthing";
@@ -48,7 +48,6 @@ const ProductForm = ({
       product && type === "Update" ? product : productDefaultValues,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit: SubmitHandler<z.infer<typeof insertProductSchema>> = async (
     values
   ) => {
@@ -65,7 +64,7 @@ const ProductForm = ({
 
     if (type === "Update") {
       if (!productId) {
-        toast.error("Missing product ID."); // ✅ optional helpful toast
+        toast.error("Missing product ID.");
         router.push(`/admin/products`);
         return;
       }
@@ -81,7 +80,8 @@ const ProductForm = ({
     }
   };
   const images = form.watch("images");
-
+  const isFeatured = form.watch("isFeatured");
+  const banner = form.watch("banner");
   return (
     <Form {...form}>
       <form
@@ -251,7 +251,53 @@ const ProductForm = ({
             )}
           />
         </div>
-        <div className="upload-field">{/* Is Featured */}</div>
+        <div className="upload-field">
+          <div className="upload-field">
+            Featured Product
+            <Card>
+              <CardContent className="space-y-2 mt-2  ">
+                <FormField
+                  control={form.control}
+                  name="isFeatured"
+                  render={({ field }) => (
+                    <FormItem className="space-x-2 items-center">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>Is Featured?</FormLabel>
+                    </FormItem>
+                  )}
+                />
+                {isFeatured && banner && (
+                  <Image
+                    src={banner}
+                    alt="banner image"
+                    className=" w-full object-cover object-center rounded-sm"
+                    width={1920}
+                    height={680}
+                  />
+                )}
+                {isFeatured && !banner && (
+                  <UploadButton
+                    endpoint="imageUploader"
+                    onClientUploadComplete={(res: { url: string }[]) => {
+                      form.setValue("banner", res[0].url);
+                    }}
+                    onUploadError={(error: Error) => {
+                      toast.error("Upload Failed", {
+                        description:
+                          error?.message || "An unexpected error occurred.",
+                      });
+                    }}
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
         <div>
           {/* Description */}
           <FormField
@@ -272,7 +318,17 @@ const ProductForm = ({
             )}
           />
         </div>
-        <div>{/* Submit */}</div>
+        <div>
+          {" "}
+          <Button
+            type="submit"
+            size="lg"
+            disabled={form.formState.isSubmitting}
+            className="button col-span-2 w-full"
+          >
+            {form.formState.isSubmitting ? "Submitting" : `${type} Product`}
+          </Button>
+        </div>
       </form>
     </Form>
   );
